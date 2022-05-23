@@ -19,7 +19,7 @@ class ProductItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         footer: GridTileBar(
-          backgroundColor: Color.fromARGB(221, 15, 15, 15),
+          backgroundColor: Colors.black87,
           leading: IconButton(
             icon: Icon(Icons.favorite),
             color: Theme.of(context).accentColor,
