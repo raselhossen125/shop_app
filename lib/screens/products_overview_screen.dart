@@ -32,7 +32,7 @@ class ProductsOverviewScreen extends StatelessWidget {
     ),
     Product(
       id: 'p4',
-      title: 'A Pan',
+      title: 'Pan',
       description: 'Prepare any meal you want.',
       price: 49.99,
       imageUrl:
@@ -40,7 +40,7 @@ class ProductsOverviewScreen extends StatelessWidget {
     ),
     Product(
       id: 'p5',
-      title: 'A Chair',
+      title: 'Chair',
       description: 'Brown Wooden Rocking Chair.',
       price: 78.99,
       imageUrl:
