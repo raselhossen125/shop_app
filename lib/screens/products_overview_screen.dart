@@ -1,14 +1,51 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import '../widgets/products_gridview.dart';
 
-class ProductsOverviewScreen extends StatelessWidget {
+
+enum FilterOptins { favourite, all }
+
+class ProductsOverviewScreen extends StatefulWidget {
+  @override
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+}
+
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+var _showOnlyFavourites = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("My  Shop")),
-      body: ProductsGridview(),
+      appBar: AppBar(
+        title: Text("My  Shop"),
+        actions: [
+          PopupMenuButton(
+            onSelected: (FilterOptins selectedValue) {
+              setState(() {
+                if (selectedValue == FilterOptins.favourite) {
+                _showOnlyFavourites = true;
+              }
+              else {
+                _showOnlyFavourites = false;
+              }
+              });
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (ctx) => [
+              PopupMenuItem(
+                child: Text("Only favourites"),
+                value: FilterOptins.favourite,
+              ),
+              PopupMenuItem(
+                child: Text("Show all"),
+                value: FilterOptins.all,
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: ProductsGridview(_showOnlyFavourites),
     );
   }
 }

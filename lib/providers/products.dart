@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../models/product.dart';
+import 'product.dart';
 
 class Products with ChangeNotifier{
   List<Product> _items = [
@@ -48,13 +48,32 @@ class Products with ChangeNotifier{
     ),
   ];
 
+  // var _showFavouritesOnly = false;
+
   List<Product> get items{
+    // if (_showFavouritesOnly){
+    //   _items.where((element) => element.isFavourite).toList();
+    // }
     return [..._items];
+  }
+
+  List<Product> get favouriteItems{
+    return _items.where((element) => element.isFavourite).toList();
   }
 
   Product findById(String id) {
     return _items.firstWhere((element) => element.id == id);
   }
+
+  // void showFavouritesOnly() {
+  //   _showFavouritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavouritesOnly = false;
+  //   notifyListeners();
+  // }
 
   void addProduct() {
     notifyListeners();

@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       900: Color.fromRGBO(25, 25, 112, 1.0),
     };
     MaterialColor pokeballRed = MaterialColor(0xff293462, pokeballRedSwatch);
-    return ChangeNotifierProvider(
-      create: (ctx) => Products(),
+    return ChangeNotifierProvider.value(
+      value: Products(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyShop',
