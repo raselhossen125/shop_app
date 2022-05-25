@@ -1,8 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart.dart';
+import '../widgets/badge.dart';
 import '../widgets/products_gridview.dart';
-
 
 enum FilterOptins { favourite, all }
 
@@ -12,7 +14,7 @@ class ProductsOverviewScreen extends StatefulWidget {
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
-var _showOnlyFavourites = false;
+  var _showOnlyFavourites = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,10 @@ var _showOnlyFavourites = false;
             onSelected: (FilterOptins selectedValue) {
               setState(() {
                 if (selectedValue == FilterOptins.favourite) {
-                _showOnlyFavourites = true;
-              }
-              else {
-                _showOnlyFavourites = false;
-              }
+                  _showOnlyFavourites = true;
+                } else {
+                  _showOnlyFavourites = false;
+                }
               });
             },
             icon: Icon(Icons.more_vert),
@@ -42,6 +43,17 @@ var _showOnlyFavourites = false;
                 value: FilterOptins.all,
               ),
             ],
+          ),
+          Consumer<Cart>(
+            builder: (context, cart, ch) => Badge(
+              child: ch!,
+              value: cart.itemCount.toString(),
+              color: Color(0xff256858),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.shopping_cart),
+            ),
           ),
         ],
       ),
