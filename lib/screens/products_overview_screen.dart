@@ -1,10 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sort_child_properties_last, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 import '../widgets/badge.dart';
 import '../widgets/products_gridview.dart';
+import 'cart_screen.dart';
 
 enum FilterOptins { favourite, all }
 
@@ -48,10 +49,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             builder: (context, cart, ch) => Badge(
               child: ch!,
               value: cart.itemCount.toString(),
-              color: Color(0xff256858),
+              color: Theme.of(context).accentColor,
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
               icon: Icon(Icons.shopping_cart),
             ),
           ),
