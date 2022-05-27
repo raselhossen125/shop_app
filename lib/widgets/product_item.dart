@@ -25,11 +25,11 @@ class ProductItem extends StatelessWidget {
               .pushNamed(ProductDetailScreen.routeName, arguments: product.id),
           child: Image.network(
             product.imageUrl,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         footer: GridTileBar(
-          backgroundColor: Colors.black87,
+          backgroundColor: Colors.black45,
           leading: Consumer<Product>(
             builder: (context, product, child) => IconButton(
               icon: Icon(
