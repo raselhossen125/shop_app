@@ -15,13 +15,11 @@ class Badge extends StatelessWidget {
   final Color color;
 
   Badge({
-    // Key? key,
+    Key? key,
     required this.child,
     required this.value,
     required this.color
-  })
-  //  : super(key: key)
-   ;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
         title: 'MyShop',
         theme: ThemeData(
             primarySwatch: pokeballRed,
+            errorColor: Colors.red,
             accentColor: Colors.deepOrange,
             fontFamily: "Lato"),
         routes: {

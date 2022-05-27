@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/cart.dart';
+import '../providers/cart.dart' show Cart;
+import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart_screen';
@@ -18,6 +19,7 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: [
           Card(
+            elevation: 3,
             margin: EdgeInsets.all(15),
             child: Padding(
               padding: EdgeInsets.all(8),
@@ -25,16 +27,17 @@ class CartScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "total",
+                    "Total",
                     style: TextStyle(fontSize: 20),
                   ),
                   Spacer(),
                   Chip(
-                      label: Text(
-                        "${cartData.totalAmount.toStringAsFixed(2)}",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Theme.of(context).primaryColor),
+                    label: Text(
+                      "\$${cartData.totalAmount.toStringAsFixed(2)}",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
                   FlatButton(
                     onPressed: () {},
                     child: Text(
@@ -45,7 +48,19 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cartData.items.length,
+              itemBuilder: (ctx, index) => CartItem(
+                cartData.items.values.toList()[index].id,
+                cartData.items.keys.toList()[index],
+                cartData.items.values.toList()[index].title,
+                cartData.items.values.toList()[index].quantity,
+                cartData.items.values.toList()[index].price,
+              ),
+            ),
+          ),
         ],
       ),
     );
