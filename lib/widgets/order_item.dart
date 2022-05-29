@@ -64,7 +64,7 @@ class _OrderItemState extends State<OrderItem> {
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.amber,
+                                color: Colors.green,
                               ),
                             ),
                             Text(
