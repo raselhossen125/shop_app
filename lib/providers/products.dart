@@ -46,22 +46,6 @@ class Products with ChangeNotifier{
       imageUrl:
           'https://images.pexels.com/photos/4627515/pexels-photo-4627515.jpeg?cs=srgb&dl=pexels-engin-akyurt-4627515.jpg&fm=jpg',
     ),
-    Product(
-      id: 'p6',
-      title: 'Purnima',
-      description: 'Brown Wooden Rocking Chair.',
-      price: 78.99,
-      imageUrl:
-          'https://scontent.fdac80-1.fna.fbcdn.net/v/t1.6435-9/81746006_679670262567138_8897776604869033984_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=QWH8EFF7utYAX-piTv9&_nc_ht=scontent.fdac80-1.fna&oh=00_AT9xoKTltltWJmRgQn19nwF_Mn5QFbdIj_RvsgYBRKTu5Q&oe=62B5B658',
-    ),
-    Product(
-      id: 'p7',
-      title: 'Pooja',
-      description: 'Brown Wooden Rocking Chair.',
-      price: 78.99,
-      imageUrl:
-          'https://scontent.fdac80-1.fna.fbcdn.net/v/t1.6435-9/156955775_4175254755826729_1185969317954708966_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=KOE5si_0-KoAX_2Qw3_&_nc_ht=scontent.fdac80-1.fna&oh=00_AT9XHiHlARa-zLkNUJM8oBOeKg-YMRueDYfeeXSOa5AYrQ&oe=62B5345D',
-    ),
   ];
 
   // var _showFavouritesOnly = false;

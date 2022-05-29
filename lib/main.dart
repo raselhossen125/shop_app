@@ -6,6 +6,7 @@ import 'providers/cart.dart';
 import 'providers/orders.dart';
 import 'providers/products.dart';
 import 'screens/cart_screen.dart';
+import 'screens/orders_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/products_overview_screen.dart';
 
@@ -47,14 +48,17 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'MyShop',
         theme: ThemeData(
-            primarySwatch: pokeballRed,
-            errorColor: Colors.red,
-            accentColor: Colors.deepOrange,
-            fontFamily: "Lato"),
+          primarySwatch: pokeballRed,
+          errorColor: Colors.red,
+          accentColor: Colors.deepOrange,
+          buttonColor: pokeballRed,
+          fontFamily: "Lato",
+        ),
         routes: {
           '/': (ctx) => ProductsOverviewScreen(),
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-          CartScreen.routeName:(ctx) => CartScreen(),
+          CartScreen.routeName: (ctx) => CartScreen(),
+          OrdersScreen.routeName: (ctx) => OrdersScreen(),
         },
       ),
     );
