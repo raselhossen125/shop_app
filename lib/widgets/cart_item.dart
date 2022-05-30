@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, sort_child_properties_last, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +29,29 @@ class CartItem extends StatelessWidget {
         padding: EdgeInsets.only(right: 20),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Are you sure?"),
+            content: Text("Do you want to remove this item from the cart?"),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text("No"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Text("Yes"),
+              ),
+            ],
+          ),
+        );
+      },
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
@@ -52,7 +75,8 @@ class CartItem extends StatelessWidget {
               ),
             ),
             title: Text(title),
-            subtitle: Text("Total :  \$${(price * quantity).toStringAsFixed(2)}"),
+            subtitle:
+                Text("Total :  \$${(price * quantity).toStringAsFixed(2)}"),
             trailing: Text("$quantity x"),
           ),
         ),
