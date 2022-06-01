@@ -38,14 +38,6 @@ class Products with ChangeNotifier{
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
-    Product(
-      id: 'p5',
-      title: 'Chair',
-      description: 'Brown Wooden Rocking Chair.',
-      price: 78.99,
-      imageUrl:
-          'https://images.pexels.com/photos/4627515/pexels-photo-4627515.jpeg?cs=srgb&dl=pexels-engin-akyurt-4627515.jpg&fm=jpg',
-    ),
   ];
 
   // var _showFavouritesOnly = false;
