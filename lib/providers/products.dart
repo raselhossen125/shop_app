@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'product.dart';
 
-class Products with ChangeNotifier{
+class Products with ChangeNotifier {
   List<Product> _items = [
     Product(
       id: 'p1',
@@ -42,14 +42,14 @@ class Products with ChangeNotifier{
 
   // var _showFavouritesOnly = false;
 
-  List<Product> get items{
+  List<Product> get items {
     // if (_showFavouritesOnly){
     //   _items.where((element) => element.isFavourite).toList();
     // }
     return [..._items];
   }
 
-  List<Product> get favouriteItems{
+  List<Product> get favouriteItems {
     return _items.where((element) => element.isFavourite).toList();
   }
 
@@ -67,7 +67,15 @@ class Products with ChangeNotifier{
   //   notifyListeners();
   // }
 
-  void addProduct() {
+  void addProduct(Product product) {
+    final newProduct = Product(
+      description: product.description,
+      id: DateTime.now().toString(),
+      imageUrl: product.imageUrl,
+      price: product.price,
+      title: product.title,
+    );
+    _items.add(newProduct);
     notifyListeners();
   }
 }
