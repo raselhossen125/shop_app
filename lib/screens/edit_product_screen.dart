@@ -82,10 +82,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_editProduct.id != '') {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editProduct.id, _editProduct);
-          print("Update");
     } else {
       Provider.of<Products>(context, listen: false).addProduct(_editProduct);
-      print("add");
     }
     Navigator.of(context).pop();
   }
