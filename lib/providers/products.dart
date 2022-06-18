@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_final_fields, avoid_print
+// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable
 
-import 'package:flutter/cupertino.dart';
-
+import 'dart:convert';
 import 'product.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -68,15 +69,30 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
-    final newProduct = Product(
-      description: product.description,
-      id: DateTime.now().toString(),
-      imageUrl: product.imageUrl,
-      price: product.price,
-      title: product.title,
-    );
-    _items.add(newProduct);
-    notifyListeners();
+    final url = Uri.https(
+        'shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorite': product.isFavourite,
+      }),
+    )
+        .then((response) {
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],
+      );
+      _items.add(newProduct);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
@@ -84,8 +100,7 @@ class Products with ChangeNotifier {
     if (prodIndex >= 0) {
       _items[prodIndex] = newProduct;
       notifyListeners();
-    }
-    else {
+    } else {
       print('.....');
     }
   }
@@ -94,5 +109,4 @@ class Products with ChangeNotifier {
     _items.removeWhere((proId) => proId.id == id);
     notifyListeners();
   }
-
 }
