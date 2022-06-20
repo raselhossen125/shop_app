@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable
+// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler
 
 import 'dart:convert';
 import 'product.dart';
@@ -69,8 +69,8 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product product) {
-    final url = Uri.https(
-        'shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
+    final url =
+        Uri.https('shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
     return http
         .post(
       url,
@@ -92,6 +92,8 @@ class Products with ChangeNotifier {
       );
       _items.add(newProduct);
       notifyListeners();
+    }).catchError((error) {
+      throw error;
     });
   }
 
