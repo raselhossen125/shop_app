@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler
+// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler, use_rethrow_when_possible
 
 import 'dart:convert';
 import 'product.dart';
@@ -68,21 +68,31 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> addProduct(Product product) {
-    final url =
-        Uri.https('shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
-    return http
-        .post(
-      url,
-      body: json.encode({
-        'title': product.title,
-        'description': product.description,
-        'imageUrl': product.imageUrl,
-        'price': product.price,
-        'isFavorite': product.isFavourite,
-      }),
-    )
-        .then((response) {
+  Future<void> faceAndSetProducts() async {
+    final url = Uri.https(
+        'shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
+    try {
+      final response = await http.get(url);
+      print(json.decode(response.body));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> addProduct(Product product) async {
+    final url = Uri.https(
+        'shop-app-9077a-default-rtdb.firebaseio.com', '/products.json');
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavourite,
+        }),
+      );
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -91,10 +101,12 @@ class Products with ChangeNotifier {
         id: json.decode(response.body)['name'],
       );
       _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
+      print(error);
       throw error;
-    });
+    }
   }
 
   void updateProduct(String id, Product newProduct) {

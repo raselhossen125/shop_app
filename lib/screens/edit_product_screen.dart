@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_final_fields, avoid_print, unnecessary_cast, unnecessary_null_comparison, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_final_fields, avoid_print, unnecessary_cast, unnecessary_null_comparison, deprecated_member_use, empty_catches
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,15 +74,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
-    setState(() {
-      _isLoading = true;
-    });
+  Future<void> _saveForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
     if (_editProduct.id != '') {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editProduct.id, _editProduct);
@@ -91,10 +91,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editProduct)
-          .catchError((error) {
-        return showDialog(
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editProduct);
+      } catch (error) {
+        await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('An error occurred!'),
@@ -109,13 +110,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      })
-      .then((_) {
+      } finally {
         setState(() {
           _isLoading = false;
         });
         Navigator.of(context).pop();
-      });
+      }
     }
   }
 
