@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +9,10 @@ import '../widgets/user_product_item.dart';
 
 class UserProductsScreen extends StatelessWidget {
   static const routeName = "user-product";
+
+  Future<void> _refreshProducts (BuildContext context) async {
+    await Provider.of<Products>(context, listen: false).faceAndSetProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +30,22 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView.builder(
-          itemCount: productsData.items.length,
-          itemBuilder: (_, index) => Column(
-            children: [
-              UserProductItem(
-                productsData.items[index].id,
-                productsData.items[index].title,
-                productsData.items[index].imageUrl,
-              ),
-              Divider(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: () => _refreshProducts(context),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: ListView.builder(
+            itemCount: productsData.items.length,
+            itemBuilder: (_, index) => Column(
+              children: [
+                UserProductItem(
+                  productsData.items[index].id,
+                  productsData.items[index].title,
+                  productsData.items[index].imageUrl,
+                ),
+                Divider(),
+              ],
+            ),
           ),
         ),
       ),

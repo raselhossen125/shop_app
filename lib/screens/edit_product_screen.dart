@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_final_fields, avoid_print, unnecessary_cast, unnecessary_null_comparison, deprecated_member_use, empty_catches
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_final_fields, avoid_print, unnecessary_cast, unnecessary_null_comparison, deprecated_member_use, empty_catches, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,12 +84,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
     if (_editProduct.id != '') {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editProduct.id, _editProduct);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -110,13 +106,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ],
           ),
         );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
+      // finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
