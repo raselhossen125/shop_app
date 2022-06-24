@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler, use_rethrow_when_possible
 
 import 'dart:convert';
+import 'package:shop_app/models/http_exception.dart';
+
 import 'product.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -117,7 +119,6 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
     } catch (error) {
-      print(error);
       throw error;
     }
   }
@@ -141,18 +142,19 @@ class Products with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     final url = Uri.https(
-          'shop-app-9077a-default-rtdb.firebaseio.com', '/products/$id');
+        'shop-app-9077a-default-rtdb.firebaseio.com', '/products/$id.json');
     final existingProductIndex = _items.indexWhere((proId) => proId.id == id);
     Product? existingProduct = _items[existingProductIndex];
-    http.delete(url).then((response){
-      print(response.statusCode);
-      existingProduct = null;
-    }).catchError((_) {
-      _items.insert(existingProductIndex, existingProduct!);
-    });
     _items.removeAt(existingProductIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpException('Could not delete product');
+    }
+    existingProduct = null;
   }
 }
