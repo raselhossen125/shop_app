@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/cart.dart' show Cart;
 import '../providers/orders.dart';
 import '../widgets/cart_item.dart';
@@ -39,19 +38,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      Provider.of<Orders>(context, listen: false).addOrder(
-                        cartData.items.values.toList(),
-                        cartData.totalAmount,
-                      );
-                      cartData.clear();
-                    },
-                    child: Text(
-                      "Order Now",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
+                  OrderButton(cartData: cartData),
                 ],
               ),
             ),
@@ -69,6 +56,45 @@ class CartScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key? key,
+    required this.cartData,
+  }) : super(key: key);
+
+  final Cart cartData;
+
+  @override
+  State<OrderButton> createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      onPressed: (widget.cartData.totalAmount <=0 || _isLoading) ? null : () async{
+        setState(() {
+          _isLoading = true;
+        });
+        await Provider.of<Orders>(context, listen: false).addOrder(
+          widget.cartData.items.values.toList(),
+          widget.cartData.totalAmount,
+        );
+        setState(() {
+          _isLoading = false;
+        });
+        widget.cartData.clear();
+      },
+      child: _isLoading ? CircularProgressIndicator() : Text(
+        "Order Now",
+        style: TextStyle(color: Theme.of(context).primaryColor),
       ),
     );
   }
