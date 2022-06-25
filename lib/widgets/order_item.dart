@@ -21,7 +21,7 @@ class _OrderItemState extends State<OrderItem> {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).buttonColor,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.only(top: 12, left: 10, right: 10, bottom: 0),
       child: Column(
         children: [
           ListTile(
