@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler, use_rethrow_when_possible
+// ignore_for_file: prefer_final_fields, avoid_print, unused_local_variable, argument_type_not_assignable_to_error_handler, use_rethrow_when_possible, unnecessary_null_comparison
 
 import 'dart:convert';
 import 'package:shop_app/models/http_exception.dart';
@@ -76,6 +76,9 @@ class Products with ChangeNotifier {
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if(extractedData == null) {
+      return;
+    }
       List<Product> loadedProduct = [];
       extractedData.forEach((prodId, prodData) {
         loadedProduct.add(Product(
